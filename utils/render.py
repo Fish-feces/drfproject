@@ -21,7 +21,7 @@ class AotoPackRender(JSONRenderer):
             }
         return super(AotoPackRender, self).render(data, accepted_media_type, renderer_context)
 
-from django.contrib.auth.models import AbstractUser
+
 def exception_handler(exc, context):
     """
     Returns the response that should be used for any given exception.
