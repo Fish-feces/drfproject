@@ -5,16 +5,20 @@ from app1.models import Snippet
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = User
-        fields = ('url', 'username', 'groups')
-        extra_kwargs = {
-            'groups': {'view_name': 'group-detail', 'lookup_field': 'pk'},
-        }
+        fields = ('url', 'username', 'groups', 'password')
+        # extra_kwargs = {
+        #     'groups': {'view_name': 'group-detail', 'lookup_field': 'pk'},
+        # }
         # extra_kwargs = {
         #     'url': {'view_name': 'api:user-detail'},
         #     'groups': {'view_name': 'api:group-detail'},
         # }
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -73,3 +77,16 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
         # extra_kwargs = {
         #     'url': {'view_name': 'api:snippet-detail'},
         # }
+
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+        ]
+        extra_kwargs = {
+            'username': {'write_only': True},
+            'password': {'write_only': True},
+        }

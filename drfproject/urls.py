@@ -24,7 +24,7 @@ from app1 import views
 from drfproject import settings
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet, base_name='user')  # user-list,
+router.register(r'users', views.UserViewSet)  # user-list, basename = user
 router.register(r'groups', views.GroupViewSet)
 router.register(r'snippet', views.SnippetViewSet)
 
