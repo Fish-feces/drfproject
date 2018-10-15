@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from app1.serializers import UserSerializer, GroupSerializer, SnippetSerializer
+from app1.serializers import UserSerializer, GroupSerializer, SnippetSerializer, LoginSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,6 +11,9 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework import mixins, viewsets, filters
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import exceptions
+from django.contrib.auth import authenticate, login
+from rest_framework import generics
 
 from app1.models import Snippet
 
@@ -21,6 +24,18 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.order_by('-date_joined')
     serializer_class = UserSerializer
+
+    def create(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            raise exceptions.ValidationError('已经登陆')
+        username = self.request.data.get('username')
+        password = self.request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(self.request, user)
+        else:
+            raise exceptions.ValidationError('用户名或密码错误,或账号被禁用')
+        return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
