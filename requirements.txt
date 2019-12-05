@@ -14,7 +14,6 @@ Flask-WTF==0.14.2
 idna==2.7
 itsdangerous==0.24
 itypes==1.1.0
-Jinja2==2.10
 MarkupSafe==1.0
 Pygments==2.2.0
 PyJWT==1.6.4
