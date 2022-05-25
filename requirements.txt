@@ -16,7 +16,7 @@ itsdangerous==0.24
 itypes==1.1.0
 MarkupSafe==1.0
 Pygments==2.2.0
-PyJWT==1.6.4
+PyJWT==2.4.0
 pytz==2018.5
 requests==2.20.0
 sqlparse==0.2.4
